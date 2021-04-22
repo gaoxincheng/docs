@@ -65,7 +65,11 @@ fetch --nohooks webrtc_ios
 gclient sync # 同步代码，如果出错继续执行这行代码即可 
 git new-branch your-branch-name 
 # 下载指定分支代码，例如我下载branch-68 就是 
-gitcheckout -b branch-68 remote-branch68 #（远端68具体地址）
+cd src
+git checkout -b branch-68 remote-branch68 #（远端68具体地址）
+gclient sync # 切换分支 也需要同步代码
+cd ..
+gclient sync --with_branch_heads # 不执行可能会出现未知错误
 ```
 2. 接下来就是漫长等待，等待所有的都同步完成即可。
 3. 编译和生成指定工程
@@ -98,5 +102,7 @@ python build_ios_libs.py --bitcode 生成库文件在out_ios_lib下面
 ```
 9. 结束
 到这里基本上库和app都已经编译出来了。有问题可以在下面留言！
+
+*NOTE* : 编译环境最好有配置好的开发者账号并配好证书签名等信息，否则Demo可能无法正常编译
 
 [参考链接-webrtc ios 代码下载编译终极版](https://www.jianshu.com/p/f8ddf30845f9)
