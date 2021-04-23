@@ -77,6 +77,7 @@ gclient sync --with_branch_heads # 不执行可能会出现未知错误
 ```sh
  # debug build for 64-bit iOS
  gn gen out/ios_64 --args='target_os="ios" target_cpu="arm64"'
+ # 如果编译机没有开发者账号，可添加 `ios_enable_code_signing=false`,但编译出的APP Demo可能无法在真机运行，静态库不确认是否有影响.
 ```
 5. 生成模拟器的（可选）
 ```sh
