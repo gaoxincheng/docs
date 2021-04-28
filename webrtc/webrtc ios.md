@@ -1,4 +1,8 @@
 
+*NOTE* : 
+- 编译环境最好有配置好的开发者账号并配好证书签名等信息，否则Demo可能无法正常编译
+- 尽量保持编译webrtc使用的编译器与上层应用使用的编译器版本保持一致，并保持-std=c++ xx一致，防止ABI兼容问题。
+  
 # 准备工作
 
 编译对应平台的webrtc，最好用对应平台的机器去下载webrtc源码，之前使用Ubuntu下载webrtc ios源码，编译时发现third party下的llvm clang架构不对，下载的clang是gnu Linux的，不是Mac下的Mach-o架构的.
@@ -75,9 +79,11 @@ gclient sync --with_branch_heads # 不执行可能会出现未知错误
 3. 编译和生成指定工程
 4. 生成arm64平台ninja工程
 ```sh
- # debug build for 64-bit iOS
- gn gen out/ios_64 --args='target_os="ios" target_cpu="arm64"'
+ # release build for 64-bit iOS
+ gn gen out/ios_64 --args='target_os="ios" rtc_enable_protobuf=false is_debug=false  target_cpu="arm64"'
+ # 设置rtc_enable_protobuf 为false，开发中如果其他模块用到Google protocol buf会有崩溃，因此设置为false
  # 如果编译机没有开发者账号，可添加 `ios_enable_code_signing=false`,但编译出的APP Demo可能无法在真机运行，静态库不确认是否有影响.
+ # 若有min_sdk 问题,可修改find sdk脚本。
 ```
 5. 生成模拟器的（可选）
 ```sh
@@ -97,13 +103,16 @@ open -a Xcode.app out/ios/all.xcworkspace
     
 8. 编译出wenbrtc库文件
 ```sh
+# 编译各个单独模块的静态库
 ninja -C out/ios framework_objc
 # 也可以调用脚本编译
 python build_ios_libs.py --bitcode 生成库文件在out_ios_lib下面
+# 编译libwebrtc.a 该库包含所有依赖，具体可查看out/ios/obj/build.ninja文件
+ninja -C out/ios webrtc
 ```
 9. 结束
-到这里基本上库和app都已经编译出来了。有问题可以在下面留言！
 
-*NOTE* : 编译环境最好有配置好的开发者账号并配好证书签名等信息，否则Demo可能无法正常编译
+    正常使用直接编arm(armv7)和arm64架构的libwebrtc.a 库，然后用lipo合并成一个库给上层使用即可.
+
 
 [参考链接-webrtc ios 代码下载编译终极版](https://www.jianshu.com/p/f8ddf30845f9)
