@@ -2,6 +2,7 @@
 *NOTE* : 
 - 编译环境最好有配置好的开发者账号并配好证书签名等信息，否则Demo可能无法正常编译
 - 尽量保持编译webrtc使用的编译器与上层应用使用的编译器版本保持一致，并保持-std=c++ xx一致，防止ABI兼容问题。
+- [webrtc版本，目前使用的4280](https://chromiumdash.appspot.com/branches)
   
 # 准备工作
 
@@ -19,7 +20,7 @@
 ## git代理配置
 
 ```sh
-vim ~/.gitconfig 文件添加如下，后面端口配置成自己工具端口即可
+vim ~/.gitconfig 文件添加如下，后面端口配置成自己工具端口即可，ShadowsocksX-NG-R8可查看具体代理端口
 [https]
     proxy = https://127.0.0.1:1087
 [http]
@@ -28,16 +29,7 @@ vim ~/.gitconfig 文件添加如下，后面端口配置成自己工具端口即
 [socks]
     proxy = http://127.0.0.1:1086
 ```
-## 终端配置
 
-```sh
-# Mac和Linux
-export http_proxy=127.0.0.1:1087
-export https_proxy=127.0.0.1:1087
-# Windows
-set http_proxy=127.0.0.1:1087
-set https_proxy=127.0.0.1:1087
-```
 ## depot_tools配置
 
 ```sh
@@ -64,13 +56,12 @@ export NO_AUTH_BOTO_CONFIG=/Users/admin/code/depot_tools/http_proxy.boto
 
 1. 下载代码
 ```sh
-mkdir webrtc-checout-ios && cd webrtc-checout-ios
+mkdir webrtc-ios && cd webrtc-ios
 fetch --nohooks webrtc_ios
 gclient sync # 同步代码，如果出错继续执行这行代码即可 
-git new-branch your-branch-name 
-# 下载指定分支代码，例如我下载branch-68 就是 
+# 下载指定分支代码，例如我下载branch-4280 就是 
 cd src
-git checkout -b branch-68 remote-branch68 #（远端68具体地址）
+git checkout -b branch-4280 branch-heads/4280 #（远端分支名git branch -r查看）
 gclient sync # 切换分支 也需要同步代码
 cd ..
 gclient sync --with_branch_heads # 不执行可能会出现未知错误
@@ -107,7 +98,7 @@ open -a Xcode.app out/ios/all.xcworkspace
 ninja -C out/ios framework_objc
 # 也可以调用脚本编译
 python build_ios_libs.py --bitcode 生成库文件在out_ios_lib下面
-# 编译libwebrtc.a 该库包含所有依赖，具体可查看out/ios/obj/build.ninja文件
+# 编译libwebrtc.a 该库包含所有依赖，具体可查看out/ios_xx/obj/build.ninja文件
 ninja -C out/ios webrtc
 ```
 9. 结束
