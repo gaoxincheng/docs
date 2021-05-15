@@ -94,7 +94,7 @@ open -a Xcode.app out/ios/all.xcworkspace
     
 8. 编译出wenbrtc库文件
 ```sh
-# 编译各个单独模块的静态库
+# 编译动态库
 ninja -C out/ios framework_objc
 # 也可以调用脚本编译
 python build_ios_libs.py --bitcode 生成库文件在out_ios_lib下面

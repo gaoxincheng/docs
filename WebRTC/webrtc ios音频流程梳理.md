@@ -1,6 +1,6 @@
 ## 音频相关知识点
 
-- webrtc 每次处理10ms大小的语音帧（AudioFrame)
+- `webrtc` 每次处理10ms大小的语音帧（`AudioFrame`)
 - 采样率 ： 声卡每秒采集次数
 - 采样位数 ： 声卡每次采集位数
 - [其他知识点](https://www.cnblogs.com/yongdaimi/p/10722355.html)

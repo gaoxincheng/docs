@@ -6,6 +6,7 @@
  `OpenGL PBO（Pixel Buffer Object）`，被称为像素缓冲区对象，主要被用于异步像素传输操作。 `PBO`仅用于执行像素传输，不连接到纹理，且与 `FBO` （帧缓冲区对象）无关。
  `PBO`最大的优点是使用`DMA（Direct Memory Access，直接内存访问）`的方式快速地将数据传入到显卡或从显卡传出，它不需要等待CPU的周期。`PBO`的另外一个优点是可以使用异步地DMA方式传输数据。***即我们可以使用PBO快速的读取显存图像或快速修改显存展示的图像。***
 
-## [PBO文档及事例](http://www.songho.ca/opengl/gl_pbo.html)
+## 参考链接
+- [PBO文档及事例](http://www.songho.ca/opengl/gl_pbo.html)
 
-## [OpenGL像素缓冲区对象(PBO)](https://blog.csdn.net/wozhengtao/article/details/52671940)
+- [OpenGL像素缓冲区对象(PBO)](https://blog.csdn.net/wozhengtao/article/details/52671940)

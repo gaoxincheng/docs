@@ -1,5 +1,5 @@
-- 最近使用`OpenGL`处理MP4礼物特效，MP4文件中左半边部分使用rgb通道的r通道存储右半边图像对应的透明度信息，使用`OpenGL`主要用来将左右半边图像进行Alpha混合，最终实现有透明效果的特效播放效果。Alpha混合使用的`OpenGL`的着色器语言GLSL处理的，GLSL能使用GPU加速处理，并且混合后的图像能直接在显存直接展示处理，因此呈现的效果比较好。
+- 最近使用`OpenGL`处理MP4礼物特效，MP4文件中左半边部分使用rgb通道的r通道存储右半边图像对应的透明度信息，使用`OpenGL`主要用来将左右半边图像进行`Alpha`混合，最终实现有透明效果的特效播放效果。`Alpha`混合使用的`OpenGL`的着色器语言`GLSL`处理的，`GLSL`能使用GPU加速处理，并且混合后的图像能直接在显存直接展示处理，因此呈现的效果比较好。
 - 展示窗体可以用`OpenGL`自带api自己创建，也可以自己使用win32 api自己创建窗口，另外Qt也有封装好的`QGLWidget`(qt 4.8)窗体类，只要继承`QGLWidget` 和 `QGLFunctions`实现 `initializeGL`,`paintGL`,`resizeGL`这几个方法既可以在qt中作展示。
-- 遗憾的是不管使用`OpenGL` api还是win32 api或者QGLWidget 来创建窗体，窗体对应的黑色背景都无法消除。`glClearColor`能设置背景颜色，但默认就是黑色的,也无法消除。最终的实现方案是在`QGLWidget`继承类的`paintGL`中使用`grabFrameBuffer`抓取缓存图像保存为`QImage`后，再使用另一个Qt窗体来展示，并将继承`QGLWidget`的窗体隐藏(PS : 隐藏可能会导致`paintGL`不会调用)或透明处理;
-- 另外使用`OpenGL`的离屏渲染理论上也可以处理黑色背景问题，本人并未尝试。基本原理就是使用GL的帧缓存对象(FBO)，从`FBO`中抓取显示图像再做展示或存储。从查询的资料来看，使用`OpenGL`必须创建展示窗体，窗口可以不展示但一定要有。个人猜测Qt的`grabFrameBuffer`方法就是从`FBO`抓取的。
-- 在谷歌上搜到一个使用memory dc的方式处理`OpenGL`黑色背景的样例。基本思想是创建内存DC，并关联一块位图，内存DC再设置图像格式信息，让`OpenGL` context绘制到这块内存DC上，最后在win32的窗体事件中将内存DC拷贝到设备DC中。我测试的结果该方案对使用`OpenGL` 1.0的api是可行的，如果使用`OpenGL` 2.0 的api会失败，如果指定绘制到内存DC，`OpenGL`会默认使用 1.0的api，导致2.0 的api未初始化，由于要用到GLSL作Alpha混合，因此该方案不可行。
+- 遗憾的是不管使用`OpenGL` api还是win32 api或者`QGLWidget` 来创建窗体，窗体对应的黑色背景都无法消除。`glClearColor`能设置背景颜色，但默认就是黑色的,也无法消除。最终的实现方案是在`QGLWidget`继承类的`paintGL`中使用`grabFrameBuffer`抓取缓存图像保存为`QImage`后，再使用另一个Qt窗体来展示，并将继承`QGLWidget`的窗体隐藏(PS : 隐藏可能会导致`paintGL`不会调用)或透明处理;
+- 另外使用`OpenGL`的离屏渲染理论上也可以处理黑色背景问题，本人并未尝试。基本原理就是使用GL的帧缓存对象(`FBO`)，从`FBO`中抓取显示图像再做展示或存储。从查询的资料来看，使用`OpenGL`必须创建展示窗体，窗口可以不展示但一定要有。个人猜测Qt的`grabFrameBuffer`方法就是从`FBO`抓取的。
+- 在谷歌上搜到一个使用memory dc的方式处理`OpenGL`黑色背景的样例。基本思想是创建内存DC，并关联一块位图，内存DC再设置图像格式信息，让`OpenGL` context绘制到这块内存DC上，最后在win32的窗体事件中将内存DC拷贝到设备DC中。我测试的结果该方案对使用`OpenGL` 1.0的api是可行的，如果使用`OpenGL` 2.0 的api会失败，如果指定绘制到内存DC，`OpenGL`会默认使用 1.0的api，导致2.0 的api未初始化，由于要用到`GLSL`作`Alpha`混合，因此该方案不可行。
