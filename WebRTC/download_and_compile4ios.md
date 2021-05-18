@@ -15,6 +15,7 @@
 3. 安装depot_tools并配置环境变量（具体配置可以谷歌）   
     git clone https://chromium.googlesource.com/chromium/tools/depot_tools
 
+4. 编译使用的Xcode版本 : 12.4
 # 配置环境
 
 ## git代理配置
