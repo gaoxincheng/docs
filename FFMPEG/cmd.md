@@ -10,3 +10,14 @@ ffmpeg -i "concat:out.mp4|out1.mp4" -c copy merge.mp4
 
 ffmpeg -i int1.mp4 -i int2.mp4 -filter_complex '[0:0] [0:1] [1:0] [1:1] concat=n=2:v=1:a=1 [v] [a]' -map '[v]' -map '[a]' merge.mp4
 ```
+
+### 裁剪视频
+```sh
+ffmpeg.exe -i .\QQ2024519-155515-HD.mp4 -ss 00:13:23 -to 00:20:00 -c copy out2.mp4
+```
+
+### 视频压缩
+```sh
+ ffmpeg.exe -i test.MP4 -r 25 output.mp4
+ ffmpeg.exe -i test.MP4 -b 600k output.mp4
+```
