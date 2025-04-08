@@ -142,6 +142,8 @@
 
 - [构建参数说明](https://www.chromium.org/developers/gn-build-configuration/)
 
+- [C++ API Docs](https://cef-builds.spotifycdn.com/docs/stable.html)
+
 - [CEF DEMO分析](https://cloud.tencent.com/developer/article/2344496)
 
 - [CEF107版本编译](https://www.cnblogs.com/river12/p/17023144.html)
@@ -194,7 +196,7 @@
 		cef_state_t databases;                          //控制数据库是否开启。命令行"disable-databases"
 		cef_state_t webgl;                              //控制webgl是否开启。命令行"disable-webgl"
 		cef_color_t background_color;                   //背景颜色。同上面初始化设置中
-		ef_string_t accept_language_list;               //同上面初始化设置中
+		cef_string_t accept_language_list;               //同上面初始化设置中
 	}
 
 ```
