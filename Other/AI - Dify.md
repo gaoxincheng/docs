@@ -86,6 +86,14 @@
 
 - 微信个人公众号无客服消息权限？目前没在官网看到明确说明，认证后可推客服消息？
 
+## Dify 与 微信对接环境搭建
+
+### wsl update failed
+	- [开启hyper-v、Linux子系统等](https://www.cnblogs.com/bokemoqi/p/17926296.html)
+	- [wsl update failed](https://zhuanlan.zhihu.com/p/693634781)
+	
+### Docker 修改存储路径及设置Engine地址
+
 ### gewe、 dify(api)、dify on wechat网络配置
 
 - 关掉翻墙软件
@@ -110,6 +118,13 @@
 	```
 - **检查gewe容器网络情况，ping qq.com等，若是不行重启docker**
 
+- docker 镜像添加host
+```sh
+	extra_hosts:
+      - "updates.dify.ai:104.26.8.156"
+```
+
+
 ### docker 安装ping
 
 ```sh
@@ -117,10 +132,6 @@
 	apt-get install iputils-ping
 ```
 
-### wsl update failed
-	- [开启hyper-v、Linux子系统等](https://www.cnblogs.com/bokemoqi/p/17926296.html)
-	- [wsl update failed](https://zhuanlan.zhihu.com/p/693634781)
-	
 ### 问题收集
 - 本地部署的模型，会出现无响应，线上的暂未遇到
 - 本地部署的模型可以配置模型参数，线上的没有配置选项
